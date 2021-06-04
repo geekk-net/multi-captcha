@@ -1,0 +1,26 @@
+{
+  "name": "geekk/multi-captcha",
+  "type": "library",
+  "description": "Various captchas that support the mechanism for switching between them in the configuration file",
+  "keywords": ["captcha","recaptcha","hcaptcha","kcaptcha"],
+  "homepage": "https://github.com/geekk-net/multi-captcha",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Igor",
+      "email": "igor@geekk.net",
+      "role": "Developer"
+    }
+  ],
+  "require":
+  {
+    "php": ">=7.2",
+    "ext-json": "*",
+    "guzzlehttp/guzzle": "6.*|7.*"
+  },
+  "autoload": {
+    "psr-4": {
+      "Geekk\\MultiCaptcha\\": "src"
+    }
+  }
+}
