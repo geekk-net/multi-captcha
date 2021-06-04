@@ -62,7 +62,7 @@ use Geekk\MultiCaptcha\ReCaptcha2\ReCaptcha2Request as Base;
 use Illuminate\Http\Request;
 
 /**
- * Вариант ReCaptcha2Request для Laravel
+ * ReCaptcha2Request for Laravel
  */
 class ReCaptcha2Request extends Base
 {
@@ -89,8 +89,7 @@ use Geekk\MultiCaptcha\CaptchaRequestInterface;
 
 
 /**
- * Создает объект для работы с капчей
- * в зависимости от того какая подключена в конфигурационном файле
+ * Creates object of captcha by configuration file's settings
  */
 class CaptchaManager
 {
@@ -146,8 +145,6 @@ class CaptchaManager
 For kcaptcha you need implement CaptchaStoreInterface:
 
 ```php
-<?php
-
 namespace App\Captcha;
 
 use Geekk\MultiCaptcha\CaptchaStoreInterface;
