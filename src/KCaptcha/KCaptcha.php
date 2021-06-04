@@ -6,6 +6,7 @@ use Exception;
 use Geekk\MultiCaptcha\CaptchaInterface;
 use Geekk\MultiCaptcha\CaptchaRequestInterface;
 use Geekk\MultiCaptcha\CaptchaStoreInterface;
+use Composer\Autoload\ClassLoader;
 
 /**
  * Captcha driver. KCapctha - http://www.captcha.ru/kcaptcha/
@@ -61,15 +62,31 @@ class KCaptcha implements CaptchaInterface
             // CAPTCHA image colors (RGB, 0-255)
             'foreground_color' => array(mt_rand(0, 80), mt_rand(0, 80), mt_rand(0, 80)),
             'background_color' => array(mt_rand(220, 255), mt_rand(220, 255), mt_rand(220, 255)),
-            // JPEG quality of CAPTCHA image (bigger is better quality, but larger file size)
-            'jpeg_quality' => 90,
-            // Папка со шрифтами
-            'fontsdir_absolute' => dirname(__FILE__).'/fonts/',
-            // do not change without changing font files!
-            'alphabet' => "0123456789abcdefghijklmnopqrstuvwxyz"
         ];
         // Apply settings from config
         $this->config = array_merge($default, $config);
+        if(empty($this->config['fontsdir_absolute'])) {
+            // Folder with fonts
+            $this->config['fontsdir_absolute'] = $this->getVendorPath().'geekk/multi-captcha/resources/fonts/kcaptcha/';
+        }
+        if(empty($this->config['alphabet'])) {
+            // do not change without changing font files!
+            $this->config['alphabet'] = "0123456789abcdefghijklmnopqrstuvwxyz";
+        }
+    }
+
+    /**
+     * Get path to "vendor" folder
+     * @return string
+     */
+    private function getVendorPath()
+    {
+        $reflector = new \ReflectionClass(ClassLoader::class);
+        $vendorPath = preg_replace('/^(.*)\/composer\/ClassLoader\.php$/', '$1', $reflector->getFileName() );
+        if($vendorPath && is_dir($vendorPath)) {
+            return $vendorPath . '/';
+        }
+        throw new \RuntimeException('Unable to detect vendor path.');
     }
 
     protected function generate()
