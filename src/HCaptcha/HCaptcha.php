@@ -29,7 +29,28 @@ class HCaptcha implements CaptchaInterface, NeedExtraJs
      */
     public function render(): string
     {
-        return sprintf('<div class="h-captcha" data-sitekey="%s"></div>', $this->siteKey);
+        $viewData = $this->getViewData();
+        return sprintf($this->getTemplate(), $viewData['site_key']);
+    }
+
+    /**
+     * Template (without data) for captcha
+     * @return string
+     */
+    public function getTemplate(): string
+    {
+        return '<div class="h-captcha" data-sitekey="%s"></div>';
+    }
+
+    /**
+     * Data for template (render)
+     * @return array
+     */
+    public function getViewData(): array
+    {
+        return [
+            'site_key' => $this->siteKey,
+        ];
     }
 
     /**

@@ -389,17 +389,48 @@ class KCaptcha implements CaptchaInterface
      */
     public function render(): string
     {
-        $img = $this->generate();
+        $viewData = $this->getViewData();
+        return sprintf($this->getTemplate(), $viewData['src'], $viewData['key']);
+    }
+
+    /**
+     * Template (without data) for captcha
+     * @return string
+     */
+    public function getTemplate(): string
+    {
+        return
+            '<img src="%s" alt="captcha"/><div/>'.
+            '<input type="hidden" name="k-captcha-key" value="%s">'.
+            '<input type="text" name="k-captcha-response" value="">';
+    }
+
+    /**
+     * Convert image to base64
+     * @param $img
+     * @return string
+     */
+    protected function convertToBase64($img): string
+    {
         ob_start();
         imagepng($img);
         $imageData = ob_get_contents();
         ob_end_clean();
-        $imageDataBase64 = base64_encode($imageData);
-        $template = '<div>KCAPTCHA</div>'.
-            '<img src="data:image/png;base64,%s" alt="captcha"/><div/>'.
-            '<input type="hidden" name="k-captcha-key" value="%s">'.
-            '<input type="text" name="k-captcha-response" value="">';
-        return sprintf($template, $imageDataBase64, $this->storeKey);
+        return base64_encode($imageData);
+    }
+
+    /**
+     * Data for template (render)
+     * @return array
+     */
+    public function getViewData(): array
+    {
+        $img = $this->generate();
+        $imageDataBase64 = $this->convertToBase64($img);
+        return [
+            'src' => sprintf('data:image/png;base64,%s', $imageDataBase64),
+            'key' => $this->storeKey
+        ];
     }
 
     /**

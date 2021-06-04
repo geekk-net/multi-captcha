@@ -15,6 +15,18 @@ interface CaptchaInterface
     public function render():string;
 
     /**
+     * Template (without data) for captcha
+     * @return string
+     */
+    public function getTemplate(): string;
+
+    /**
+     * Data for template (render)
+     * @return array
+     */
+    public function getViewData(): array;
+
+    /**
      * Verification of captcha's responce
      * @param CaptchaRequestInterface $captchaRequest
      * @return bool
