@@ -190,7 +190,6 @@ namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
 use App\Captcha\CaptchaManager;
-use App\Captcha\CaptchaStore;
 
 class CaptchaServiceProvider extends ServiceProvider
 {
@@ -198,13 +197,15 @@ class CaptchaServiceProvider extends ServiceProvider
     public function register()
     {
         $this->app->singleton(CaptchaManager::class, function ($app) {
-            return new CaptchaManager(config('captcha'), $app->make(CaptchaStore::class));
+            return new CaptchaManager(config('captcha'));
         });
     }
 }
 ```
 
-And then you can use it
+Add `App\Providers\CaptchaServiceProvider::class` to config/app.php
+
+Then you can use it
 
 ```php
 $captcha = $captchaManager->getCaptcha();
