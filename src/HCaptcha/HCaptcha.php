@@ -17,10 +17,10 @@ class HCaptcha implements CaptchaInterface, NeedExtraJs
 
     protected $secretKey;
 
-    public function __construct(string $siteKey, string $secretKey)
+    public function __construct(array $config)
     {
-        $this->siteKey = $siteKey;
-        $this->secretKey = $secretKey;
+        $this->siteKey = $config['site_key'];
+        $this->secretKey = $config['secret_key'];
     }
 
     /**
