@@ -23,6 +23,14 @@ But you can ease create needed wrappers and factories for a working your framewo
 
 For Laravel, you can use the geekk/multi-captcha-laravel package.
 
+## Installation
+
+Install package:
+
+```
+composer require geekk/multi-captcha
+```
+
 ## Using
 
 Configuration array:
