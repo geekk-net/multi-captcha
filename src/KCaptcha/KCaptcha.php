@@ -402,12 +402,14 @@ class KCaptcha extends BaseCaptcha implements CaptchaInterface
     {
         return
             '<div class="multi-captcha-kcaptcha">'.
-                '<div class="multi-captcha-kcaptcha__img">'.
-                    '<img src="%s" alt="captcha"/>'.
-                '<div/>'.
-                '<div class="multi-captcha-kcaptcha__input">'.
-                    '<input type="hidden" name="k-captcha-key" value="%s">'.
-                    '<input type="text" name="k-captcha-response" value="">'.
+                '<div class="multi-captcha-kcaptcha__container">'.
+                    '<div class="multi-captcha-kcaptcha__img">'.
+                        '<img src="%s" alt="captcha"/>'.
+                    '</div>'.
+                    '<div class="multi-captcha-kcaptcha__input">'.
+                        '<input type="hidden" name="k-captcha-key" value="%s">'.
+                        '<input type="text" name="k-captcha-response" value="">'.
+                    '</div>'.
                 '</div>'.
             '</div>';
     }
