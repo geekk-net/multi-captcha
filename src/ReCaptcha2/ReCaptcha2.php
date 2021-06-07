@@ -40,7 +40,10 @@ class ReCaptcha2 extends BaseCaptcha implements CaptchaInterface, NeedExtraJs
      */
     public function getTemplate(): string
     {
-        return '<div class="g-recaptcha" data-sitekey="%s"></div>';
+        return
+            '<div class="multi-captcha-recaptcha2">'.
+                '<div class="g-recaptcha" data-sitekey="%s"></div>'.
+            '</div>';
     }
 
     /**

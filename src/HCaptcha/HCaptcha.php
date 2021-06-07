@@ -40,7 +40,10 @@ class HCaptcha extends BaseCaptcha implements CaptchaInterface, NeedExtraJs
      */
     public function getTemplate(): string
     {
-        return '<div class="h-captcha" data-sitekey="%s"></div>';
+        return
+            '<div class="multi-captcha-hcaptcha">'.
+                '<div class="h-captcha" data-sitekey="%s"></div>'.
+            '</div>';
     }
 
     /**
