@@ -3,6 +3,7 @@
 namespace Geekk\MultiCaptcha\KCaptcha;
 
 use Exception;
+use Geekk\MultiCaptcha\BaseCaptcha;
 use Geekk\MultiCaptcha\CaptchaInterface;
 use Geekk\MultiCaptcha\CaptchaRequestInterface;
 use Geekk\MultiCaptcha\CaptchaStoreInterface;
@@ -11,7 +12,7 @@ use Composer\Autoload\ClassLoader;
 /**
  * Captcha driver. KCapctha - http://www.captcha.ru/kcaptcha/
  */
-class KCaptcha implements CaptchaInterface
+class KCaptcha extends BaseCaptcha implements CaptchaInterface
 {
 
     /**
@@ -444,6 +445,7 @@ class KCaptcha implements CaptchaInterface
         if (($captchaRequest instanceof KCaptchaRequest) === false) {
             throw new Exception("argument should be instnase of ".KCaptchaRequest::class);
         }
+        $this->request = $captchaRequest;
         $correctValue = $this->store->getValue($captchaRequest->getKey());
         if (empty($correctValue)) {
             return false;

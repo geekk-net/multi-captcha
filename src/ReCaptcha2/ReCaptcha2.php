@@ -2,6 +2,7 @@
 
 namespace Geekk\MultiCaptcha\ReCaptcha2;
 
+use Geekk\MultiCaptcha\BaseCaptcha;
 use GuzzleHttp\Client;
 use Geekk\MultiCaptcha\CaptchaInterface;
 use Geekk\MultiCaptcha\CaptchaRequestInterface;
@@ -10,7 +11,7 @@ use Geekk\MultiCaptcha\NeedExtraJs;
 /**
  * Captcha driver. Google reCapctha v2
  */
-class ReCaptcha2 implements CaptchaInterface, NeedExtraJs
+class ReCaptcha2 extends BaseCaptcha implements CaptchaInterface, NeedExtraJs
 {
 
     protected $siteKey;
@@ -64,6 +65,7 @@ class ReCaptcha2 implements CaptchaInterface, NeedExtraJs
         if (($captchaRequest instanceof ReCaptcha2Request) === false) {
             throw new \Exception("argument should be instnase of ".ReCaptcha2Request::class);
         }
+        $this->request = $captchaRequest;
         $responce = $captchaRequest->getResponseValue();
         if (empty($responce)) {
             return false;

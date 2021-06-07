@@ -2,6 +2,7 @@
 
 namespace Geekk\MultiCaptcha\HCaptcha;
 
+use Geekk\MultiCaptcha\BaseCaptcha;
 use Geekk\MultiCaptcha\CaptchaInterface;
 use Geekk\MultiCaptcha\CaptchaRequestInterface;
 use Geekk\MultiCaptcha\NeedExtraJs;
@@ -10,7 +11,7 @@ use GuzzleHttp\Client;
 /**
  * Captcha driver. Google hCapctha
  */
-class HCaptcha implements CaptchaInterface, NeedExtraJs
+class HCaptcha extends BaseCaptcha implements CaptchaInterface, NeedExtraJs
 {
 
     protected $siteKey;
@@ -65,6 +66,7 @@ class HCaptcha implements CaptchaInterface, NeedExtraJs
             throw new \Exception("argument should be instnase of ".HCaptchaRequest::class);
         }
 
+        $this->request = $captchaRequest;
         $responce = $captchaRequest->getResponseValue();
         if (empty($responce)) {
             return false;

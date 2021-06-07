@@ -2,29 +2,23 @@
 
 namespace Geekk\MultiCaptcha\ReCaptcha2;
 
-use Geekk\MultiCaptcha\CaptchaRequestInterface;
+use Geekk\MultiCaptcha\BaseCaptchaRequest;
 
 /*
  * User's request with checking Google reCapctha v2.
  */
-class ReCaptcha2Request implements CaptchaRequestInterface
+class ReCaptcha2Request extends BaseCaptchaRequest
 {
-
-    protected $response;
 
     protected $ip;
 
     public const RESPONSE_NAME = 'g-recaptcha-response';
 
-    public function __construct($response, $ip)
+    public function __construct(?bool $submitted, ?string $response, ?string $ip)
     {
+        $this->submitted = $submitted;
         $this->response = $response;
         $this->ip = $ip;
-    }
-
-    public function getResponseValue(): ?string
-    {
-        return $this->response;
     }
 
     public function getIP(): ?string

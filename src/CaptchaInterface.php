@@ -32,4 +32,10 @@ interface CaptchaInterface
      * @return bool
      */
     public function verify(CaptchaRequestInterface $captchaRequest): bool;
+
+    /**
+     * Form submission flag
+     * @return bool|null
+     */
+    public function isSubmitted(): ?bool;
 }

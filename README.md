@@ -142,11 +142,11 @@ class CaptchaManager
         $driverName = $this->connectionConfig['driver'];
         switch ($driverName) {
             case 'recaptcha2':
-                return new ReCaptcha2Request($request->post(ReCaptcha2Request::RESPONSE_NAME), $request->ip());
+                return new ReCaptcha2Request(count($request->post()), $request->post(ReCaptcha2Request::RESPONSE_NAME), $request->ip());
             case 'hcaptcha':
-                return new HCaptchaRequest($request->post(HCaptchaRequest::RESPONSE_NAME), $request->ip());
+                return new HCaptchaRequest(count($request->post()), $request->post(HCaptchaRequest::RESPONSE_NAME), $request->ip());
             case 'kcaptcha':
-                return new KCaptchaRequest($request->post(KCaptchaRequest::RESPONSE_NAME), $request->post(KCaptchaRequest::KEY_NAME));
+                return new KCaptchaRequest(count($request->post()),$request->post(KCaptchaRequest::RESPONSE_NAME), $request->post(KCaptchaRequest::KEY_NAME));
         }
         throw new \Exception(sprintf('Unknown captcha driver: %s', $driverName));
     }

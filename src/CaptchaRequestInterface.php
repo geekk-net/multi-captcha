@@ -14,4 +14,10 @@ interface CaptchaRequestInterface
      * @return string|null
      */
     public function getResponseValue(): ?string;
+
+    /**
+     * Form submission flag
+     * @return bool|null
+     */
+    public function isSubmitted(): ?bool;
 }
