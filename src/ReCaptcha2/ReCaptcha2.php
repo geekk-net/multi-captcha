@@ -88,9 +88,9 @@ class ReCaptcha2 extends BaseCaptcha implements CaptchaInterface, NeedExtraJs
 
     /**
      * JS file for captcha
-     * @return string
+     * @return string|null
      */
-    public function getJsUrl(): string
+    public function getJsUrl(): ?string
     {
         return "https://www.google.com/recaptcha/api.js";
     }

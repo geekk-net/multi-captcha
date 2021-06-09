@@ -7,5 +7,5 @@ namespace Geekk\MultiCaptcha;
  */
 interface NeedExtraJs
 {
-    public function getJsUrl():string;
+    public function getJsUrl():?string;
 }

@@ -8,11 +8,12 @@ use Geekk\MultiCaptcha\CaptchaInterface;
 use Geekk\MultiCaptcha\CaptchaRequestInterface;
 use Geekk\MultiCaptcha\CaptchaStoreInterface;
 use Composer\Autoload\ClassLoader;
+use Geekk\MultiCaptcha\NeedExtraJs;
 
 /**
  * Captcha driver. KCapctha - http://www.captcha.ru/kcaptcha/
  */
-class KCaptcha extends BaseCaptcha implements CaptchaInterface
+class KCaptcha extends BaseCaptcha implements CaptchaInterface, NeedExtraJs
 {
 
     /**
@@ -459,5 +460,14 @@ class KCaptcha extends BaseCaptcha implements CaptchaInterface
             return false;
         }
         return ($captchaRequest->getResponseValue() === $correctValue);
+    }
+
+    /**
+     * JS file URL for captcha
+     * @return string|null
+     */
+    public function getJsUrl(): ?string
+    {
+        return $this->config['js'] ?? null;
     }
 }

@@ -89,9 +89,9 @@ class HCaptcha extends BaseCaptcha implements CaptchaInterface, NeedExtraJs
 
     /**
      * JS file for captcha
-     * @return string
+     * @return string|null
      */
-    public function getJsUrl(): string
+    public function getJsUrl(): ?string
     {
         return "https://hcaptcha.com/1/api.js";
     }
