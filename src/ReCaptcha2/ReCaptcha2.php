@@ -65,9 +65,6 @@ class ReCaptcha2 extends BaseCaptcha implements CaptchaInterface, NeedExtraJs
      */
     public function verify(CaptchaRequestInterface $captchaRequest): bool
     {
-        if (($captchaRequest instanceof ReCaptcha2Request) === false) {
-            throw new \Exception("argument should be instnase of ".ReCaptcha2Request::class);
-        }
         $this->request = $captchaRequest;
         $responce = $captchaRequest->getResponseValue();
         if (empty($responce)) {
@@ -78,7 +75,7 @@ class ReCaptcha2 extends BaseCaptcha implements CaptchaInterface, NeedExtraJs
             'form_params' => [
                 'secret' => $this->secretKey,
                 'response' => $responce,
-                'remoteip' => $captchaRequest->getIP()
+                'remoteip' => $captchaRequest->getContext()
             ]
         ]);
         $body = $response->getBody();

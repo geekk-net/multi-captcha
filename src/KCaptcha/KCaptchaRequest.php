@@ -2,15 +2,13 @@
 
 namespace Geekk\MultiCaptcha\KCaptcha;
 
-use Geekk\MultiCaptcha\BaseCaptchaRequest;
+use Geekk\MultiCaptcha\CaptchaRequest;
 
 /*
  * User's request with checking KCapctha.
  */
-class KCaptchaRequest extends BaseCaptchaRequest
+class KCaptchaRequest extends CaptchaRequest
 {
-
-    protected $key;
 
     public const RESPONSE_NAME = 'k-captcha-response';
 
@@ -18,17 +16,6 @@ class KCaptchaRequest extends BaseCaptchaRequest
 
     public function __construct(?bool $submitted, ?string $response, ?string $key)
     {
-        $this->submitted = $submitted;
-        $this->response = $response;
-        $this->key = $key;
-    }
-
-    /**
-     * Getting key of store
-     * @return string|null
-     */
-    public function getKey(): ?string
-    {
-        return $this->key;
+        parent::__construct($submitted, $response, $key);
     }
 }

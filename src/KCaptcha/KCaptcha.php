@@ -451,11 +451,8 @@ class KCaptcha extends BaseCaptcha implements CaptchaInterface, NeedExtraJs
      */
     public function verify(CaptchaRequestInterface $captchaRequest): bool
     {
-        if (($captchaRequest instanceof KCaptchaRequest) === false) {
-            throw new Exception("argument should be instnase of ".KCaptchaRequest::class);
-        }
         $this->request = $captchaRequest;
-        $correctValue = $this->store->getValue($captchaRequest->getKey());
+        $correctValue = $this->store->getValue($captchaRequest->getContext());
         if (empty($correctValue)) {
             return false;
         }

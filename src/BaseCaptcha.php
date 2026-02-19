@@ -9,7 +9,7 @@ abstract class BaseCaptcha
 {
 
     /**
-     * @var BaseCaptchaRequest $request
+     * @var CaptchaRequestInterface $request
      */
     protected $request;
 
