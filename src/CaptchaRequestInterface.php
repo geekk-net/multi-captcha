@@ -20,4 +20,10 @@ interface CaptchaRequestInterface
      * @return bool|null
      */
     public function isSubmitted(): ?bool;
+
+    /**
+     * Optional context (meaning depends on captcha type: e.g. IP, key).
+     * @return string|null
+     */
+    public function getContext(): ?string;
 }
