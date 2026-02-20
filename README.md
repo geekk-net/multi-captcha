@@ -10,6 +10,7 @@ Now packages supports these types:
 * Google ReCaptcha v2
 * HCaptcha
 * KCaptcha
+* Cloudflare Turnstile
 
 You can add new one type. You need implement CaptchaInterface and CaptchaRequestInterface.
 
@@ -56,6 +57,12 @@ $config = [
             'kcaptcha' => [
                 'driver' => 'kcaptcha',
                 'show_credits' => false
+            ],
+
+            'turnstile' => [
+                'driver' => 'turnstile',
+                'site_key' => '...',
+                'secret_key' => '...'
             ]
         ]
 ]
@@ -136,6 +143,8 @@ class CaptchaManager
             case 'kcaptcha':
                 $store = new CaptchaStore();
                 return new KCaptcha($this->connectionConfig, $store);
+            case 'turnstile':
+                return new Turnstile($this->connectionConfig);
         }
         throw new \Exception(sprintf('Unknown captcha driver: %s', $driverName));
     }
@@ -150,6 +159,8 @@ class CaptchaManager
                 return new HCaptchaRequest(count($request->post()), $request->post(HCaptchaRequest::RESPONSE_NAME), $request->ip());
             case 'kcaptcha':
                 return new KCaptchaRequest(count($request->post()), $request->post(KCaptchaRequest::RESPONSE_NAME), $request->post(KCaptchaRequest::KEY_NAME));
+            case 'turnstile':
+                return new TurnstileRequest(count($request->post()), $request->post(TurnstileRequest::RESPONSE_NAME), $request->ip());
         }
         throw new \Exception(sprintf('Unknown captcha driver: %s', $driverName));
     }
