@@ -12,11 +12,11 @@
       "role": "Developer"
     }
   ],
-  "require":
-  {
+  "require": {
     "php": ">=7.2",
     "ext-json": "*",
-    "guzzlehttp/guzzle": "6.*|7.*"
+    "guzzlehttp/guzzle": "6.*|7.*",
+    "gregwar/captcha": "^1.2"
   },
   "autoload": {
     "psr-4": {

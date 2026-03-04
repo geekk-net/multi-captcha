@@ -10,6 +10,8 @@ Now packages supports these types:
 * Google ReCaptcha v2
 * HCaptcha
 * KCaptcha
+* Cloudflare Turnstile
+* Gregwar (image captcha, based on `gregwar/captcha`)
 
 You can add new one type. You need implement CaptchaInterface and CaptchaRequestInterface.
 
@@ -56,6 +58,17 @@ $config = [
             'kcaptcha' => [
                 'driver' => 'kcaptcha',
                 'show_credits' => false
+            ],
+
+            'gregwar' => [
+                'driver' => 'gregwar',
+                // optional: width, height, length, quality, allowed_symbols
+            ],
+
+            'turnstile' => [
+                'driver' => 'turnstile',
+                'site_key' => '...',
+                'secret_key' => '...'
             ]
         ]
 ]
@@ -136,6 +149,11 @@ class CaptchaManager
             case 'kcaptcha':
                 $store = new CaptchaStore();
                 return new KCaptcha($this->connectionConfig, $store);
+            case 'gregwar':
+                $store = new CaptchaStore();
+                return new Gregwar($this->connectionConfig, $store);
+            case 'turnstile':
+                return new Turnstile($this->connectionConfig);
         }
         throw new \Exception(sprintf('Unknown captcha driver: %s', $driverName));
     }
@@ -150,6 +168,10 @@ class CaptchaManager
                 return new HCaptchaRequest(count($request->post()), $request->post(HCaptchaRequest::RESPONSE_NAME), $request->ip());
             case 'kcaptcha':
                 return new KCaptchaRequest(count($request->post()), $request->post(KCaptchaRequest::RESPONSE_NAME), $request->post(KCaptchaRequest::KEY_NAME));
+            case 'gregwar':
+                return new GregwarRequest(count($request->post()), $request->post(GregwarRequest::RESPONSE_NAME), $request->post(GregwarRequest::KEY_NAME));
+            case 'turnstile':
+                return new TurnstileRequest(count($request->post()), $request->post(TurnstileRequest::RESPONSE_NAME), $request->ip());
         }
         throw new \Exception(sprintf('Unknown captcha driver: %s', $driverName));
     }
@@ -165,7 +187,7 @@ use Geekk\MultiCaptcha\CaptchaRequest;
 
 public function getRequest(Request $request): CaptchaRequestInterface
 {
-    // For recaptcha2/hcaptcha
+    // For recaptcha2, hcaptcha, turnstile
     $submitted = (bool) count($request->post());
     $response = $request->post('captcha-response');
     $context = $request->ip();
@@ -173,7 +195,7 @@ public function getRequest(Request $request): CaptchaRequestInterface
 }
 ```
 
-Note: for KCaptcha the context is the store key (sent from the frontend), not the IP, so with this approach either do not use KCaptcha or handle it in a separate branch (e.g. a separate `if` by driver).
+Note: for KCaptcha and Gregwar the context is the store key (sent from the frontend), not the IP, so with this approach either do not use KCaptcha/Gregwar or handle them in a separate branch (e.g. a separate `if` by driver).
 
 Then you can use it
 
